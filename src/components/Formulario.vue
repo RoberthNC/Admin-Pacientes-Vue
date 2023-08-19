@@ -1,5 +1,5 @@
 <script setup>
-    import { reactive } from "vue";
+    import { reactive, computed } from "vue";
     import Alerta from "./Alerta.vue";
 
     const alerta = reactive({
@@ -10,6 +10,10 @@
     const emit = defineEmits(['update:nombre','update:propietario','update:email','update:alta','update:sintomas','guardar-mascota']);
 
     const props = defineProps({
+        id:{
+            type:[String,null],
+            required:true
+        },
         nombre:{
             type:String,
             required:true
@@ -49,6 +53,8 @@
             alerta.mensaje = "";
         }, 3000);
     }
+
+    const editando = computed(()=>props.id);
 
 </script>
 
@@ -150,7 +156,7 @@
             <input
                 type="submit"
                 class="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors duration-700 rounded-md"
-                value="Registrar Paciente"
+                :value="[editando?'Guardar  Cambios':'Registrar Paciente']"
             />
         </form>
     </div>
